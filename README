@@ -3,3 +3,6 @@ CWRUcam
 Project by Eric Perko and Chad Rockey for Computational Perception Spring 2010
 
 Motion tracking camera using an Arduino to control the mount and some firewire cameras to do mono and stereo tracking.
+
+Try rosrun camera_calibration cameracalibrator.py --size 8x6 --square 0.02858 image:=/left/camera/image_raw camera:=/left/camera
+ for calibration with the start_cwrucam.launch file
