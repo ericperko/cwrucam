@@ -1,0 +1,7 @@
+<launch>
+<node pkg="camera1394" type="camera1394" name="left">
+    <param name="guid" value="00b09d010061ab25" />
+    <param name="video_mode" value="640x480_rgb" />
+
+</node>
+</launch>
