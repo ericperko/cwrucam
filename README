@@ -1,0 +1,5 @@
+CWRUcam
+
+Project by Eric Perko and Chad Rockey for Computational Perception Spring 2010
+
+Motion tracking camera using an Arduino to control the mount and some firewire cameras to do mono and stereo tracking.
