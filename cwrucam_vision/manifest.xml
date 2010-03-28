@@ -1,0 +1,18 @@
+<package>
+  <description brief="cwrucam_vision">
+
+     cwrucam_vision
+
+  </description>
+  <author>Eric Perko</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/cwrucam_vision</url>
+  <depend package="camera1394"/>
+  <depend package="image_proc"/>
+  <depend package="stereo_image_proc"/>
+  <depend package="camera_calibration"/>
+
+</package>
+
+
