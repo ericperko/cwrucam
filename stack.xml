@@ -1,0 +1,12 @@
+<stack>
+  <description brief="cwrucam">cwrucam</description>
+  <author>Maintained by Eric Perko</author>
+  <license>BSD</license>  
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/cwrucam</url>
+  <depend stack="camera_drivers_experimental" /> <!-- camera1394 -->
+  <depend stack="common_msgs" /> <!-- geometry_msgs -->
+  <depend stack="image_pipeline" /> <!-- stereo_image_proc, image_proc, camera_calibration -->
+  <depend stack="ros" /> <!-- rospy, std_msgs, roscpp -->
+
+</stack>

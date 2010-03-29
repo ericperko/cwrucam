@@ -1,0 +1,4 @@
+#rosdeps for the cwrucam
+
+python-serial:
+    ubuntu: python-serial

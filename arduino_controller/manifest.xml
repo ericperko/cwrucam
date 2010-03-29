@@ -1,0 +1,20 @@
+<package>
+  <description brief="arduino_controller">
+
+     arduino_controller
+
+  </description>
+  <author>Eric Perko</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/arduino_controller</url>
+  <depend package="std_msgs"/>
+  <depend package="geometry_msgs"/>
+  <depend package="rospy"/>
+  <depend package="roscpp"/>
+
+  <rosdep name="python-serial" />
+
+</package>
+
+
