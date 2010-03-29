@@ -1,0 +1,6 @@
+This directory contains the actual sketches from the Arduino IDE as well as any required 3rd-party libs
+
+For the libs, each should be specified below with install directions.
+
+messenger:
+    copy the contents of messenger/arduino/ to ~/sketchbook/libraries then restart the Arduino IDE and you should be able to compile the code in cam_controller
