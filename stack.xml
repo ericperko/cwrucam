@@ -7,6 +7,7 @@
   <depend stack="camera_drivers_experimental" /> <!-- camera1394 -->
   <depend stack="common_msgs" /> <!-- geometry_msgs -->
   <depend stack="image_pipeline" /> <!-- stereo_image_proc, image_proc, camera_calibration -->
-  <depend stack="ros" /> <!-- rospy, std_msgs, roscpp -->
+  <depend stack="joystick_drivers" /> <!-- joy -->
+  <depend stack="ros" /> <!-- std_msgs, rospy, roscpp -->
 
 </stack>

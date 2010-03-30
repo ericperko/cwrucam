@@ -1,0 +1,21 @@
+<package>
+  <description brief="cwrucam_teleop">
+
+     cwrucam_teleop
+
+  </description>
+  <author>Eric Perko</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/cwrucam_teleop</url>
+  <depend package="joy"/>
+  <depend package="roscpp"/>
+  <depend package="rospy"/>
+  <depend package="geometry_msgs"/>
+  <depend package="std_msgs"/>
+
+
+
+</package>
+
+

@@ -1,0 +1,3 @@
+<launch>
+<node pkg="arduino_controller" type="controller.py" name="arduino_controller" />
+</launch>

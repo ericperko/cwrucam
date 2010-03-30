@@ -1,0 +1,6 @@
+<launch>
+    <include file="$(find arduino_controller)/start_arduino_controller.launch" />
+
+    <include file="$(find cwrucam_teleop)/start_cwrucam_teleop.launch" />
+
+</launch>

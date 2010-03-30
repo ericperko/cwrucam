@@ -9,30 +9,31 @@ Servo pan;
 Servo tilt;
 Messenger receiver;
 
-const int pan_pin = 13;
+const int pan_pin = 9;
 const int tilt_pin = 10;
 
 int pan_pos = 90;
 int tilt_pos = 90;
 
+int pan_vel = 0;
+int tilt_vel = 0;
+
 void executeCommand() {
   while(receiver.available()) {
-    pan_pos = receiver.readInt();
-    tilt_pos = receiver.readInt();
+    pan_vel = receiver.readInt();
+    tilt_vel = receiver.readInt();
   }
-  Serial.println(pan_pos);
-  Serial.println(tilt_pos);
+  Serial.println(pan_vel);
+  Serial.println(tilt_vel);
   Serial.println("Command received");
-  pan.write(pan_pos);
-  tilt.write(tilt_pos);
 }
 
 void setup() {
   pan.attach(pan_pin);
   tilt.attach(tilt_pin);
   Serial.begin(115200);
-  Serial.println("      CWRUcam Arduino Controller v0.2");
-  Serial.println("Pin 13 is pan servo for testing. Pin 10 is tilt servo");
+  Serial.println("      CWRUcam Arduino Controller v0.4");
+  Serial.println("Pin 9 is pan servo. Pin 10 is tilt servo");
   
   receiver.attach(executeCommand);
   
@@ -46,6 +47,20 @@ void loop() {
   while(Serial.available()) {
     receiver.process(Serial.read());
   }
+  pan_pos += pan_vel;
+  tilt_pos += tilt_vel;
+  if (pan_pos < 5) {
+    pan_pos = 5;
+  } else if (pan_pos > 175) {
+    pan_pos = 175;
+  }
+  if (tilt_pos < 0) {
+    tilt_pos = 0;
+  } else if (tilt_pos > 180) {
+    tilt_pos = 180;
+  }
+  pan.write(pan_pos);
+  tilt.write(tilt_pos);
 }
 
 
