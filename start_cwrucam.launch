@@ -3,4 +3,5 @@
 
     <include file="$(find cwrucam_teleop)/start_cwrucam_teleop.launch" />
 
+    <include file="$(find cwrucam_vision)/start_cwrucam_vision.launch" />
 </launch>
