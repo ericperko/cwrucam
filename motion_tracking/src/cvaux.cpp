@@ -25,7 +25,7 @@
 #include <opencv/cv.h>
 #endif
 
-#include "cvblob.h"
+#include <motion_tracking/cvblob.h>
 
 namespace cvb
 {

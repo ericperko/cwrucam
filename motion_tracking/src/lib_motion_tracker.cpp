@@ -4,6 +4,8 @@
 
 #include <motion_tracking/lib_motion_tracker.h>
 
+#include <motion_tracking/cvblob.h>
+
 int rlow = 60;
 int rhigh = 80;
 int glow = 85;
@@ -15,6 +17,7 @@ int xSize = 640;
 int ySize = 480;
 
 using namespace cv;
+using namespace cvb;
 void blobfind(const cv::Mat& src, cv::Mat& out)
 {
 	Mat temp;
@@ -46,18 +49,27 @@ void blobfind(const cv::Mat& src, cv::Mat& out)
 
 	dilate(out, out, Mat(), Point(-1,-1), 30);
 
+	IplImage temp1 = out;
+	IplImage temp2 = temp;
+	IplImage *labelImg=cvCreateImage(cvGetSize(&temp1), IPL_DEPTH_LABEL, 1);
+	CvBlobs blobs;
+	unsigned int result=cvLabel(&temp1, labelImg, blobs);
+	cvRenderBlobs(labelImg, blobs, &temp2, &temp2);
+
 	vector<Point2f> corners;
 
 	goodFeaturesToTrack(out, corners, 4,.01, 1,Mat(),3);
 
-	int xCenter = (corners[0].x+corners[2].x)/2;
-	int yCenter = (corners[0].y+corners[2].y)/2;
+	//int xCenter = (corners[0].x+corners[2].x)/2;
+	//int yCenter = (corners[0].y+corners[2].y)/2;
 
-	int xOffset = xSize/2 - xCenter;
-	int yOffset = ySize/2 - yCenter;
+	//int xOffset = xSize/2 - xCenter;
+	//int yOffset = ySize/2 - yCenter;
 
-	circle(out, corners[0], 10, Scalar(255,0,0));
-	circle(out, corners[2], 10, Scalar(255,0,0));
+	//circle(out, corners[0], 10, Scalar(255,0,0));
+	//circle(out, corners[2], 10, Scalar(255,0,0));
 	//merge(mats, out);
 	//out = mats[0];
+	out = temp;
+	cvReleaseImage(&labelImg);
 }
