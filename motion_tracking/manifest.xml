@@ -1,0 +1,19 @@
+<package>
+  <description brief="motion_tracking">
+
+     motion_tracking
+
+  </description>
+  <author>Eric Perko</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/motion_tracking</url>
+  <depend package="image_geometry"/>
+  <depend package="image_transport"/>
+  <depend package="roscpp"/>
+  <depend package="rospy"/>
+  <depend package="std_msgs"/>
+
+</package>
+
+
