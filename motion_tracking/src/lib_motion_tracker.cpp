@@ -48,13 +48,16 @@ void blobfind(const cv::Mat& src, cv::Mat& out)
 
 	vector<Point2f> corners;
 
-	goodFeaturesToTrack(out, vector<Point2f>& corners, int maxCorners=4, double qualityLevel=.01, double minDistance=1, const Mat& mask=Mat(), int blockSize=3, bool useHarrisDetector=false, double k=0.04);
+	goodFeaturesToTrack(out, corners, 4,.01, 1,Mat(),3);
 
 	int xCenter = (corners[0].x+corners[2].x)/2;
 	int yCenter = (corners[0].y+corners[2].y)/2;
 
 	int xOffset = xSize/2 - xCenter;
 	int yOffset = ySize/2 - yCenter;
+
+	circle(out, corners[0], 10, Scalar(255,0,0));
+	circle(out, corners[2], 10, Scalar(255,0,0));
 	//merge(mats, out);
 	//out = mats[0];
 }
