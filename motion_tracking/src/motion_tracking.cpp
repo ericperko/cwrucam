@@ -7,9 +7,11 @@
 void imageCallback(const sensor_msgs::ImageConstPtr& msg)
 {
 	sensor_msgs::CvBridge bridge;
+	IplImage * image;
 	try
 	{
-		cvShowImage("view", bridge.imgMsgToCv(msg, "bgr8"));
+		image = bridge.imgMsgToCv(msg, "bgr8");
+		cvShowImage("view", image);
 	}
 	catch (sensor_msgs::CvBridgeException& e)
 	{
