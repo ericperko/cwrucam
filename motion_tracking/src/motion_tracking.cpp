@@ -4,14 +4,18 @@
 #include <opencv/highgui.h>
 #include <cv_bridge/CvBridge.h>
 
+#include <motion_tracking/lib_motion_tracker.h>
+
 void imageCallback(const sensor_msgs::ImageConstPtr& msg)
 {
 	sensor_msgs::CvBridge bridge;
-	IplImage * image;
+	cv::Mat image;
+	cv::Mat output;
 	try
 	{
-		image = bridge.imgMsgToCv(msg, "bgr8");
-		cvShowImage("view", image);
+		image = cv::Mat(bridge.imgMsgToCv(msg, "bgr8"));
+		blobfind(image, output);
+		cv::imshow("view", output);
 	}
 	catch (sensor_msgs::CvBridgeException& e)
 	{

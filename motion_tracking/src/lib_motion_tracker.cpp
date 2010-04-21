@@ -2,6 +2,8 @@
 #include <opencv/highgui.h>
 #include <cv_bridge/CvBridge.h>
 
+#include <motion_tracking/lib_motion_tracker.h>
+
 int rlow = 60;
 int rhigh = 80;
 int glow = 85;
@@ -9,14 +11,12 @@ int ghigh = 120;
 int blow = 70;
 int bhigh = 100;
 
-void blobfind(const IplImage& src, IplImage& vec)
+void blobfind(const cv::Mat& src, cv::Mat& out)
 {
-	IplImage *r = cvCreateImage(cvGetSize(src), src->depth, 1);
-	IplImage *g = cvClone(r);
-	IplImage *b = cvClone(r);
+	cv::vector<cv::Mat> mats;
 
-	cvSplit(img, r, g, b, NULL);
+	cv::split(src, mats);
 	
 	// Show green channel
-	cvShowImage("Green", g);
+	out = mats[1];
 }
