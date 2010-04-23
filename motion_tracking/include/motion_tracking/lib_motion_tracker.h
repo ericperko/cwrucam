@@ -3,6 +3,6 @@
 
 #include <opencv/cv.h>
 
-void blobfind(const cv::Mat& src, cv::Mat& out);
+void blobfind(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec);
 
 #endif

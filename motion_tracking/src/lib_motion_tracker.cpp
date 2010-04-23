@@ -18,7 +18,7 @@ int ySize = 480;
 
 using namespace cv;
 using namespace cvb;
-void blobfind(const cv::Mat& src, cv::Mat& out)
+void blobfind(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec)
 {
 	Mat temp;
 
@@ -56,6 +56,14 @@ void blobfind(const cv::Mat& src, cv::Mat& out)
 	unsigned int result=cvLabel(&temp1, labelImg, blobs);
 	cvRenderBlobs(labelImg, blobs, &temp2, &temp2);
 
+	CvLabel greatestBlob = cvGreaterBlob(blobs); 
+	CvPoint2D64f center;
+	center.x = xSize/2;
+	center.y = ySize/2;
+	if (greatestBlob > 0) {
+	    center = cvCentroid(blobs[greatestBlob]);
+	}
+
 	vector<Point2f> corners;
 
 	goodFeaturesToTrack(out, corners, 4,.01, 1,Mat(),3);
@@ -63,8 +71,12 @@ void blobfind(const cv::Mat& src, cv::Mat& out)
 	//int xCenter = (corners[0].x+corners[2].x)/2;
 	//int yCenter = (corners[0].y+corners[2].y)/2;
 
-	//int xOffset = xSize/2 - xCenter;
-	//int yOffset = ySize/2 - yCenter;
+	int xOffset = xSize/2 - (int) center.x;
+	int yOffset = -ySize/2 + (int) center.y;
+
+	//std::cout << xOffset << " " << yOffset << std::endl;
+
+	vec = Point2i(xOffset, yOffset);
 
 	//circle(out, corners[0], 10, Scalar(255,0,0));
 	//circle(out, corners[2], 10, Scalar(255,0,0));
