@@ -10,6 +10,6 @@
   <depend stack="image_pipeline" /> <!-- stereo_image_proc, image_proc, camera_calibration -->
   <depend stack="joystick_drivers" /> <!-- joy -->
   <depend stack="ros" /> <!-- std_msgs, rospy, roscpp -->
-  <depend stack="vision_opencv" /> <!-- image_geometry -->
+  <depend stack="vision_opencv" /> <!-- image_geometry, opencv2, cv_bridge -->
 
 </stack>
