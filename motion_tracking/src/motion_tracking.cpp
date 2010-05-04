@@ -8,21 +8,21 @@
 #include <motion_tracking/lib_motion_tracker.h>
 
 class MotionTracker {
-    public:
-	    MotionTracker();
-	    void imageCallback(const sensor_msgs::ImageConstPtr& msg);
-    private:
-	    ros::NodeHandle nh_;
-	    image_transport::ImageTransport it_;
-	    image_transport::Subscriber sub_;
-	    image_transport::Publisher image_pub_;
-	    ros::Publisher twist_pub_;
+	public:
+		MotionTracker();
+		void imageCallback(const sensor_msgs::ImageConstPtr& msg);
+	private:
+		ros::NodeHandle nh_;
+		image_transport::ImageTransport it_;
+		image_transport::Subscriber sub_;
+		image_transport::Publisher image_pub_;
+		ros::Publisher twist_pub_;
 
-	    double pan_, tilt_;
+		double pan_, tilt_;
 };
 
 MotionTracker::MotionTracker() : 
-    it_(nh_), pan_(0.012), tilt_(0.012) 
+	it_(nh_), pan_(0.012), tilt_(0.012) 
 {
 	nh_.param("pan", pan_, pan_);
 	nh_.param("tilt", tilt_, tilt_);
@@ -41,14 +41,21 @@ void MotionTracker::imageCallback(const sensor_msgs::ImageConstPtr& msg)
 	try
 	{
 		image = cv::Mat(bridge.imgMsgToCv(msg, "bgr8"));
-		blobfind_hsv(image, output, vec);
-		//cv::imshow("view", output);
-		IplImage temp = image;
-		image_pub_.publish(bridge.cvToImgMsg(&temp, "bgr8"));
+
 	}
 	catch (sensor_msgs::CvBridgeException& e)
 	{
 		ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
+	}
+	try {
+		mge_method(image, output, vec, ros::Time::now().toSec());
+		//cv::imshow("view", output);
+		IplImage temp = output;
+		image_pub_.publish(bridge.cvToImgMsg(&temp, "mono8"));
+	}
+	catch (sensor_msgs::CvBridgeException& e) {
+	    
+		ROS_ERROR("Could not convert from '%s' to 'mono8'.", msg->encoding.c_str());
 	}
 	//std::cout << vec.x << " " << vec.y << std::endl;
 	twist.angular.z = vec.x * pan_;

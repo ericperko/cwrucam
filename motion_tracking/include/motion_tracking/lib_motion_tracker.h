@@ -7,4 +7,6 @@ void blobfind(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec);
 
 void blobfind_hsv(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec);
 
+void mge_method(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec, double timestamp);
+
 #endif

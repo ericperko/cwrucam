@@ -19,8 +19,19 @@ int hhigh = 70;
 int xSize = 640;
 int ySize = 480;
 
+bool initial = true;
+
+const int diff_threshold = 30;
+const double max_time_diff = 0.5;
+const double min_time_diff = 0.05;
+const double max_time_to_track = 1.0;
+
 using namespace cv;
 using namespace cvb;
+
+Mat last;
+Mat mhi;
+
 void blobfind(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec)
 {
 	Mat temp;
@@ -87,6 +98,38 @@ void blobfind(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec)
 	//out = mats[0];
 	out = temp;
 	cvReleaseImage(&labelImg);
+}
+
+void mge_method(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec, double timestamp)
+{
+	Mat temp;
+	Mat temp2;
+	Mat mask = Mat(src.size(), CV_8UC1);
+	Mat orientation;
+
+	if (initial) {
+	    //First run through - don't calc any motion stuff, setup the initial Matrix
+
+	    cvtColor(src, last, CV_RGB2GRAY);
+	    mhi = Mat(src.size(), CV_32F);
+	    vec = Point2i(0, 0);
+	    initial = false;
+	    out = last;
+	}
+	else {
+	    cvtColor(src, temp, CV_RGB2GRAY);
+	    absdiff(last, temp, temp2);
+	    threshold(temp2, temp2, diff_threshold, 255, CV_THRESH_BINARY); 
+	    //imshow("view", temp2);
+	    updateMotionHistory(temp2, mhi, timestamp, max_time_to_track); 
+	    //imshow("view", mhi);
+	    std::cout << "mhi " << countNonZero(mhi) << std::endl;
+	    calcMotionGradient(mhi, mask, orientation, max_time_diff, min_time_diff);
+	    //imshow("view", mask);
+	    std::cout << "mask " << countNonZero(mask) << std::endl;
+	    out = mask;
+	    last = temp;
+	}
 }
 
 void blobfind_hsv(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec)
