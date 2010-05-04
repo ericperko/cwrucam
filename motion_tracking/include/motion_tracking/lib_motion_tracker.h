@@ -5,4 +5,6 @@
 
 void blobfind(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec);
 
+void blobfind_hsv(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec);
+
 #endif

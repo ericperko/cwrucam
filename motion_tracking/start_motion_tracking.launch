@@ -1,9 +1,9 @@
 <launch>
-<node pkg="motion_tracking" type="motion_tracker" name="motion_tracker">
+<node pkg="motion_tracking" type="motion_tracker" name="motion_tracker" output="screen">
     <remap from="image" to="left/camera/image_raw" />
 </node>
 
-<node pkg="image_view" type="image_view" name="motion_tracking_image_viewer">
+<node pkg="image_view" type="image_view" name="motion_tracking_image_viewer" output="screen">
     <remap from="image" to="motion_tracking_image" />
 </node>
 

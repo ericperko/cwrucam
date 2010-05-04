@@ -17,8 +17,8 @@ class TeleopCWRUcam {
 };
 
 TeleopCWRUcam::TeleopCWRUcam(): 
-	theta_(10), 
-	psi_(10), 
+	theta_(25), 
+	psi_(25), 
 	theta_axis_(1), 
 	psi_axis_(0)
 {

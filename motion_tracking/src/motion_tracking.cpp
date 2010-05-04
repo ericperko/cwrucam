@@ -41,7 +41,7 @@ void MotionTracker::imageCallback(const sensor_msgs::ImageConstPtr& msg)
 	try
 	{
 		image = cv::Mat(bridge.imgMsgToCv(msg, "bgr8"));
-		blobfind(image, output, vec);
+		blobfind_hsv(image, output, vec);
 		//cv::imshow("view", output);
 		IplImage temp = image;
 		image_pub_.publish(bridge.cvToImgMsg(&temp, "bgr8"));
@@ -60,8 +60,8 @@ int main(int argc, char **argv)
 {
 	ros::init(argc, argv, "motion_tracking");
 	MotionTracker motion_tracker;
-	//cvNamedWindow("view");
-	//cvStartWindowThread();
+	cvNamedWindow("view");
+	cvStartWindowThread();
 	ros::spin();
-	//cvDestroyWindow("view");
+	cvDestroyWindow("view");
 }

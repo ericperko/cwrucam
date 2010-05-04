@@ -4,5 +4,8 @@
 	    <param name="deadzone" value="0.12" />
 	    <param name="autorepeat_rate" value="20.0" />
 	</node> 
-	<node pkg="cwrucam_teleop" type="teleop_cwrucam_joy" name="cwrucam_teleop" />
+	<node pkg="cwrucam_teleop" type="teleop_cwrucam_joy" name="cwrucam_teleop">
+	    <param name="theta_" value="100" />
+	    <param name="psi_" value="100" />
+	</node>
 </launch>
