@@ -6,6 +6,8 @@
 
 #include <motion_tracking/cvblob.h>
 
+#include <time.h>
+
 int rlow = 60;
 int rhigh = 80;
 int glow = 85;
@@ -20,6 +22,8 @@ int xSize = 640;
 int ySize = 480;
 
 bool initial = true;
+
+double last_timestamp = 0.0, last_timestamp2 = 0.0;
 
 const int diff_threshold = 30;
 const double max_time_diff = 0.5;
@@ -102,6 +106,11 @@ void blobfind(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec)
 
 void mge_method(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec, double timestamp)
 {
+	//ros::Time::now().toSec() is too precise... we have to ignore it
+	double timestamp2 = (double)clock()/CLOCKS_PER_SEC;
+	//float t = (float) timestamp;
+	//std::cout << "timestamps " << ((float)timestamp - (float)last_timestamp) << " " << (timestamp2 - last_timestamp2)<< std::endl;
+	//std::cout << "t " << t << std::endl;
 	Mat temp;
 	Mat temp2;
 	Mat mask = Mat(src.size(), CV_8UC1);
@@ -111,7 +120,7 @@ void mge_method(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec, double times
 	    //First run through - don't calc any motion stuff, setup the initial Matrix
 
 	    cvtColor(src, last, CV_RGB2GRAY);
-	    mhi = Mat(src.size(), CV_32F);
+	    mhi = Mat(src.size(), CV_32FC1);
 	    vec = Point2i(0, 0);
 	    initial = false;
 	    out = last;
@@ -120,16 +129,21 @@ void mge_method(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec, double times
 	    cvtColor(src, temp, CV_RGB2GRAY);
 	    absdiff(last, temp, temp2);
 	    threshold(temp2, temp2, diff_threshold, 255, CV_THRESH_BINARY); 
-	    //imshow("view", temp2);
-	    updateMotionHistory(temp2, mhi, timestamp, max_time_to_track); 
+	    imshow("view", temp2);
+	    updateMotionHistory(temp2, mhi, timestamp2, max_time_to_track); 
 	    //imshow("view", mhi);
-	    std::cout << "mhi " << countNonZero(mhi) << std::endl;
-	    calcMotionGradient(mhi, mask, orientation, max_time_diff, min_time_diff);
+	    //std::cout << "mhi " << countNonZero(mhi) << std::endl;
+	    calcMotionGradient(mhi, mask, orientation, max_time_diff, min_time_diff, 3);
 	    //imshow("view", mask);
-	    std::cout << "mask " << countNonZero(mask) << std::endl;
+	    //std::cout << "mask " << countNonZero(mask) << std::endl;
+	    double orient = -1.0;
+	    orient = calcGlobalOrientation(orientation, mask, mhi, timestamp2, max_time_to_track);
+	    std::cout << "orient " << orient << std::endl;
 	    out = mask;
 	    last = temp;
 	}
+	    last_timestamp = timestamp;
+	    last_timestamp2 = timestamp2;
 }
 
 void blobfind_hsv(const cv::Mat& src, cv::Mat& out, cv::Point2i& vec)
